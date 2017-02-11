@@ -26,6 +26,8 @@ type Thing struct {
 	TestDataElement    	`json:"-"`
 	ThingID      	string 	`json:"thingID"`
 	SomeProperty 	string 	`json:"someProperty"`
+	AfnemerID 	string 	`json:"afnemerID"`
+	Bedrag 	int 	`json:"bedrag"`
 	UserID    	string 	`json:"userID"`
 }
 

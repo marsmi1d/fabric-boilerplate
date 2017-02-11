@@ -16,12 +16,24 @@
     {
       "thingID": "1",
       "userID": "john",
-      "someProperty": "8716948000003"
+      "someProperty": "8716948000003",
+      "afnemerID": "gemeente",
+      "bedrag": 750	
+
     },
     {
       "thingID": "2",
       "userID": "john",
-      "someProperty": "124914266456"
+      "someProperty": "124914266456",
+      "afnemerID": "water",
+      "bedrag": -100
+    },
+    {
+      "thingID": "3",
+      "userID": "john",
+      "someProperty": "124914261456",
+      "afnemerID": "woningbouw",
+      "bedrag": -400
     }
   ]
 }

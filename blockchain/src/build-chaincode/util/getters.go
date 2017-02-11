@@ -57,6 +57,33 @@ func GetUser(stub shim.ChaincodeStubInterface, username string) (entities.User, 
 	return user, nil
 }
 
+func GetTransactionsByUser(stub shim.ChaincodeStubInterface, username string) ([]entities.Thing, error) {
+	thingsIndex, err := GetIndex(stub, ThingsIndexName)
+	if err != nil {
+		return []entities.Thing{}, errors.New("Unable to retrieve thingsIndex, reason: " + err.Error())
+	}
+
+	var transactions []entities.Thing
+	for _, thingID := range thingsIndex {
+		thingAsBytes, err := stub.GetState(thingID)
+		if err != nil {
+			return []entities.Thing{}, errors.New("Could not retrieve thing for ID " + thingID + " reason: " + err.Error())
+		}
+
+		var thing entities.Thing
+		err = json.Unmarshal(thingAsBytes, &thing)
+		if err != nil {
+			return []entities.Thing{}, errors.New("Error while unmarshalling thingAsBytes, reason: " + err.Error())
+		}
+
+		if thing.UserID == username {
+			transactions = append(transactions, thing)
+		}
+	}
+
+	return transactions, nil
+}
+
 func GetAllUsers(stub shim.ChaincodeStubInterface) ([]entities.User, error) {
 	usersIndex, err := GetIndex(stub, UsersIndexName)
 	if err != nil {

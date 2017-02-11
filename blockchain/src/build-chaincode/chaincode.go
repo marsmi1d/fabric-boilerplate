@@ -73,6 +73,7 @@ func (t *Chaincode) Query(stub shim.ChaincodeStubInterface, functionName string,
 }
 
 func (t *Chaincode) GetQueryResult(stub shim.ChaincodeStubInterface, functionName string, args []string) (interface{}, error) {
+	logger.Infof("Query function name: ", functionName)
 	if functionName == "getUser" {
 		user, err := util.GetUser(stub, args[0])
 		if err != nil {
@@ -94,6 +95,13 @@ func (t *Chaincode) GetQueryResult(stub shim.ChaincodeStubInterface, functionNam
 		}
 
 		return thingsByUserID, nil
+	} else if functionName == "getTransactionsByUser" {
+		transactionsByUserID, err := util.GetTransactionsByUser(stub, args[0])
+		if err != nil {
+			return nil, errors.New("could not retrieve transactions by user id: " + args[0] + ", reason: " + err.Error())
+		}
+
+		return transactionsByUserID, nil
 	}
 
 	return nil, errors.New("Received unknown query function name")
